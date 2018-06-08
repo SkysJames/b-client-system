@@ -282,7 +282,7 @@ $(function() {
 							$(dialog).dialog('destroy');
 						}
 					}],
-					onLoadSuccess : function(data) {
+					onLoad : function() {
 						//$('#user_edit_form').form('load', '/user/detail?id=' + id);
 						$('#role_check_table').datagrid({
 						    url: '/role/listAllGrid',
@@ -297,7 +297,7 @@ $(function() {
 						        {field: 'name', title:'名称', width:100},
 						        {field: 'remark', title:'备注', width:100}
 						    ]],
-						    onLoad : function() {
+						    onLoadSuccess : function(data) {
 						    	$.ajax({
 									url : '/user/listRoleIds',
 									type : 'get',
@@ -315,9 +315,9 @@ $(function() {
 										}
 									}
 								});
+						    	return true;
 						    }
 						});
-						return true;
 					},
 					onClose : function() {
 						$(dialog).dialog('destroy');

@@ -271,7 +271,7 @@ $(function() {
 							$(dialog).dialog('destroy');
 						}
 					}],
-					onLoadSuccess : function(data) {
+					onLoad : function() {
 						//$('#role_edit_form').form('load', '/role/detail?id=' + id);
 						$('#res_table').propertygrid({
 						    url: '/auth/listGrid',
@@ -288,7 +288,7 @@ $(function() {
 						        {field: 'name', title:'名称', width:100},
 						        {field: 'code', title:'编号', width:100}
 						    ]],
-						    onLoad : function() {
+						    onLoadSuccess : function(data) {
 						    	$.ajax({
 									url : '/role/listResIds',
 									type : 'get',
@@ -306,9 +306,9 @@ $(function() {
 										}
 									}
 								});
+						    	return true;
 						    }
 						});
-						return true;
 					},
 					onClose : function() {
 						$(dialog).dialog('destroy');
