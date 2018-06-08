@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.form.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.validatebox.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<form id="appointment_edit_form" class="easyui-form" method="post" data-options="novalidate:true">
+		<input type="hidden" name="id" id="id"/>
+    	<table cellpadding="5">
+    		<tr>
+    			<td>产品:</td>
+    			<td><input id="productId" name="productId" class="easyui-combobox" data-options="valueField:'id',textField:'name',url:'/product/listAll', method:'get',required:true"></td>
+    		</tr>
+    		<tr>
+    			<td>客户:</td>
+    			<td><input class="easyui-textbox" type="text" name="customerId" data-options="required:true" id="customerId" readonly="readonly"></input>
+    			    <a href="javascript:;" id="customerIdSearch" class="textbox-icon searchbox-button" icon-index="0" tabindex="-1" style="width: 26px; height: 28px;"></a>
+    			</td>
+    		</tr>
+    		<tr>
+    			<td>预约时间：</td>
+    			<td><input class="easyui-datetimebox" name="appointmentTime" data-options="showSeconds:true,okText:'确定',closeText:'取消',currentText:'现在',formatter:Global.dateTimeFormatter,parser:Global.dateTimeParse,required:true" style="width:180px"></td>
+    		</tr>
+    		<tr>
+    			<td>备注:</td>
+    			<td><input class="easyui-textbox" name="remark" data-options="multiline:true" style="height:80px; width: 200px;" id="remark"></input></td>
+    		</tr>
+    	</table>
+    </form>
+    
+    <script type="text/javascript">
+    	$(function(){
+    		$('#customerIdSearch').on('click', function() {
+    			var dialog = $('<div>');
+				$(dialog).dialog({
+					title : '选择用户',
+					resizable : true,
+					maximizable : true,
+					width: 700,
+				    height: 500,
+				    collapsible : true,
+				    modal : true,
+					href: '../html/customer_select.html',
+					buttons : [{
+						text : '保存',
+						handler : function() {
+							var row = $('#customer_table').datagrid('getSelected');
+							if (row) {
+								$('#customerId').textbox('setValue', row.id);
+								$('#customerId').textbox('setText', row.name);
+							}
+							$(dialog).dialog('destroy');
+						}
+					}, {
+						text : '取消',
+						handler : function() {
+							$(dialog).dialog('destroy');
+						}
+					}]
+				});
+    		});
+    	});
+    </script>
+</body>
+</html>

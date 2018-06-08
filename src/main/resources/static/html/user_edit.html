@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.form.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.validatebox.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<form id="user_edit_form" class="easyui-form" method="post" data-options="novalidate:true">
+		<input type="hidden" name="id" id="id"/>
+    	<table cellpadding="5">
+    		<tr>
+    			<td>姓名:</td>
+    			<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" id="name"></input></td>
+    		</tr>
+    		<tr>
+    			<td>员工编号:</td>
+    			<td><input class="easyui-textbox" type="text" name="empNo" data-options="required:true" id="empNo"></input></td>
+    		</tr>
+    		<tr>
+    			<td>部门:</td>
+    			<td><input name="departmentId" id="departmentId" class="easyui-combobox" data-options="valueField:'id',textField:'name',url:'/department/listAll', method:'get',required:true"></input></td>
+    		</tr>
+    		<tr>
+    			<td>性别:</td>
+    			<td><input id="sex" name="sex" class="easyui-combobox" data-options="valueField:'id',textField:'text',url:'/user/listSex', method:'get',required:true"></td>
+    		</tr>
+    		<tr>
+    			<td>手机号码:</td>
+    			<td><input class="easyui-textbox" type="text" name="mobilePhone" data-options="required:false" id="mobilePhone"></input></td>
+    		</tr>
+    		<tr>
+    			<td>座机号码:</td>
+    			<td><input class="easyui-textbox" type="text" name="telePhone" data-options="required:false" id="telePhone"></input></td>
+    		</tr>
+    		<tr>
+    			<td>邮箱:</td>
+    			<td><input class="easyui-textbox" type="text" name="email" data-options="validType:email" id="email"></input></td>
+    		</tr>
+    		<tr>
+    			<td>状态:</td>
+    			<td><input id="status" name="status" class="easyui-combobox" data-options="valueField:'id',textField:'text',url:'/user/listStatus', method:'get',required:true"></td>
+    		</tr>
+    	</table>
+    </form>
+</body>
+</html>

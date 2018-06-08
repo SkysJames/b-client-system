@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.form.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.validatebox.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<form id="customer_edit_form" class="easyui-form" method="post" data-options="novalidate:true">
+		<input type="hidden" name="id" id="id"/>
+    	<table cellpadding="5">
+    		<tr>
+    			<td>姓名:</td>
+    			<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" id="name"></input></td>
+    		</tr>
+    		<tr>
+    			<td>公司:</td>
+    			<td><input class="easyui-textbox" type="text" name="company" data-options="required:true" id="company"></input></td>
+    		</tr>
+    		<tr>
+    			<td>手机号码:</td>
+    			<td><input class="easyui-textbox" type="text" name="mobilePhone" data-options="required:false" id="mobilePhone"></input></td>
+    		</tr>
+    		<tr>
+    			<td>座机号码:</td>
+    			<td><input class="easyui-textbox" type="text" name="telePhone" data-options="required:false" id="telePhone"></input></td>
+    		</tr>
+    		<tr>
+    			<td>QQ:</td>
+    			<td><input class="easyui-textbox" type="text" name="qq" data-options="required:false" id="qq"></input></td>
+    		</tr>
+    		<tr>
+    			<td>微信:</td>
+    			<td><input class="easyui-textbox" type="text" name="wechat" data-options="required:false" id="wechat"></input></td>
+    		</tr>
+    		<tr>
+    			<td>行业:</td>
+    			<td><input id="tradeId" name="tradeId" class="easyui-combobox" data-options="valueField:'id',textField:'name',url:'/customer_trade/listAll', method:'get',required:true"></td>
+    		</tr>
+    		<tr>
+    			<td>级别:</td>
+    			<td><input id="levelId" name="levelId" class="easyui-combobox" data-options="valueField:'id',textField:'name',url:'/customer_level/listAll', method:'get',required:true"></td>
+    		</tr>
+    		<tr>
+    			<td>共享:</td>
+    			<td><input id="share" name="share" class="easyui-combobox" data-options="valueField:'id',textField:'text',url:'/customer/listShares', method:'get',required:true"></td>
+    		</tr>
+    		<tr>
+    			<td>操作用户:</td>
+    			<td><input class="easyui-textbox" type="text" name="followUserEmpNo" data-options="required:false" id="followUserEmpNo" readonly="readonly"></input>
+    			    <a href="javascript:;" id="followUserIdSearch" class="textbox-icon searchbox-button" icon-index="0" tabindex="-1" style="width: 26px; height: 28px;"></a>
+    			</td>
+    		</tr>
+    	</table>
+    </form>
+    
+    <script type="text/javascript">
+    	$(function(){
+    		$('#followUserIdSearch').on('click', function() {
+    			var dialog = $('<div>');
+				$(dialog).dialog({
+					title : '选择用户',
+					resizable : true,
+					maximizable : true,
+					width: 700,
+				    height: 500,
+				    collapsible : true,
+				    modal : true,
+					href: '../html/user_select.html',
+					buttons : [{
+						text : '保存',
+						handler : function() {
+							var row = $('#user_table').datagrid('getSelected');
+							if (row) {
+								$('#followUserEmpNo').textbox('setValue', row.empNo);
+							}
+							$(dialog).dialog('destroy');
+						}
+					}, {
+						text : '取消',
+						handler : function() {
+							$(dialog).dialog('destroy');
+						}
+					}]
+				});
+    		});
+    	});
+    </script>
+</body>
+</html>

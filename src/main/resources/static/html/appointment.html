@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<table id="appointment_table"></table>
+	<div id="appointment_table_tb" style="padding:5px; height:auto">
+		<div style="margin-bottom:5px">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="Appointment.add()">添加预约信息</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="Appointment.removeAll()">删除预约信息</a>
+		</div>
+		<div>
+			姓名: <input class="easyui-textbox" style="width:180px" id="appointment_name_term">
+			手机号码: <input class="easyui-textbox" style="width:180px" id="appointment_mobilephone_term">
+			添加时间：<input class="easyui-datetimebox" id="appointment_starttime_term" data-options="showSeconds:true,okText:'确定',closeText:'取消',currentText:'现在',formatter:Global.dateTimeFormatter,parser:Global.dateTimeParse" style="width:180px">
+			至<input class="easyui-datetimebox" id="appointment_endtime_term" data-options="showSeconds:true,okText:'确定',closeText:'取消',currentText:'现在',formatter:Global.dateTimeFormatter,parser:Global.dateTimeParse" style="width:180px">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="Appointment.search()">查询</a>
+		</div>
+	</div>
+	<div id="appointment_edit"></div>
+	<script type="text/javascript" src="../js/appointment.js"></script>
+</body>
+</html>

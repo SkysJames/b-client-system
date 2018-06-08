@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+    <div style="height:70%;background:#B3DFDA;padding:10px">
+    	<table id="appointment_tips_table"></table>
+    </div>
+    <div>
+	    <form id="appointment_tip_form" class="easyui-form" method="post" data-options="novalidate:true">
+			<table cellpadding="5">
+				<tr>
+		   			<td>回访备注:</td>
+		   			<td><input class="easyui-textbox" name="tip" data-options="multiline:true" style="height:80px; width: 400px;" id="tip"></input></td>
+		   		</tr>
+	   		</table>
+		</form>
+    </div>
+</body>
+</html>

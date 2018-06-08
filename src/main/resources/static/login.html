@@ -1,0 +1,96 @@
+<!DOCTYPE>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="./easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="./easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="./easyui/demo.css">
+	<style type="text/css">
+		.bg {
+			background:url("./images/bg.jpg") no-repeat;
+  			background-size: 100%;
+		}
+	</style>
+	<script type="text/javascript" src="./easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="./easyui/jquery.easyui.min.js"></script>
+</head>
+<body class="bg">
+	<div id="login-window" class="easyui-window" title="登录" style="padding:5px; width:350px; height:250px" >
+	    <div class="easyui-layout" fit="true">
+	        <div region="center" border="false" style="padding:5px;background:#fff;border:1px solid #ccc;">
+	            <form  id="loginForm" method="post" action="">
+	                <div style="padding:5px 0;">
+	                    <label for="login">帐号:</label>
+	                    <input class="easyui-textbox"  type="text" name="username" style="width:260px;"></input>
+	                </div>
+	                <div style="padding:5px 0;">
+	                    <label for="password">密码:</label>
+	                    <input class="easyui-textbox"  type="password" name="password" style="width:260px;"></input>
+	                </div>
+	                <div style="padding:5px 0;text-align: center;color: red;" id="showMsg"></div>
+	            </form>
+	        </div>
+	        <div region="south" border="false" style="text-align:right;padding:5px 0;">
+	                <a class="easyui-linkbutton" iconCls="icon-ok" href="javascript:void(0)" onclick="login()">登录</a>
+	                <a class="easyui-linkbutton" iconCls="icon-cancel" href="javascript:void(0)" onclick="cleardata()">重置</a>
+	        </div>
+	    </div>
+	</div>
+		<script type="text/javascript">
+	    $(document).ready(function(){
+	        $('#login-window').window({
+	            //可伸缩箭头
+	            collapsible:false,
+	            // 最小化
+	            minimizable:false,
+	            // 最大化
+	            maximizable:false,
+	            //调整窗口大小
+	            resizable:false, 
+	            //拖拽操作
+	            draggable:false,
+	            //关闭按钮
+	            closable:false
+	        });
+	    });
+	    document.onkeydown = function(e){
+	        var event = e || window.event;  
+	        var code = event.keyCode || event.which || event.charCode;
+	        if (code == 13) {
+	            login();
+	        }
+	    }
+	    $(function(){
+	        $("input[name='username']").focus();
+	    });
+	    function cleardata(){
+	        $('#loginForm').form('clear');
+	    }
+	    function login(){
+	         if($("input[name='username']").val()=="" || $("input[name='password']").val()==""){
+	             $("#showMsg").html("用户名或密码为空，请输入");
+	             $("input[name='username']").focus();
+	        }else{
+	             $.ajax({
+	                type:"post",
+	                url : "/user/login",
+	                data : $("#loginForm").serialize(), 
+	                dataType : 'json',
+	                error : function(request) {
+	                    $("#showMsg").html("系统出错");
+	                },
+	                success:function(data) {
+	                    if (data.code == 0) {
+	                    	window.location.href = '/index.html';
+	                    } else {
+	                    	$("#showMsg").html(data.msg);
+	                    }
+	                }
+	            }); 
+	
+	        }
+	    }
+	</script>
+</body>
+</html>

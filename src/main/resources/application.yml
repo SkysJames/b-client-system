@@ -1,0 +1,25 @@
+server:
+  port: 8089
+    
+spring:
+  datasource:
+    url: jdbc:mysql://39.107.87.88:3306/lx-cust?characterEncoding=UTF-8&useSSL=true
+    username: root
+    password: qwert123456
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database: MYSQL
+    show-sql: true
+
+logging:
+  file: /logs/lx/customer-manager.log
+  level:
+    com.lx.cus : WARN
+    
+lx: 
+  data-backup-path: /lx-backup/data
+    
+    
+#39.107.87.88:22
+#u:root
+#p:qwert123456@

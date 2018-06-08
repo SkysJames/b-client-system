@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<table id="customer_table"></table>
+	<div id="customer_table_tb" style="padding:5px; height:auto">
+		<div>
+			姓名: <input class="easyui-textbox" style="width:180px" id="customer_name_term">
+			手机号码: <input class="easyui-textbox" style="width:180px" id="customer_mobilephone_term">
+			添加时间：<input class="easyui-datetimebox" id="customer_starttime_term" data-options="showSeconds:true,okText:'确定',closeText:'取消',currentText:'现在',formatter:Global.dateTimeFormatter,parser:Global.dateTimeParse" style="width:180px">
+			至<input class="easyui-datetimebox" id="customer_endtime_term" data-options="showSeconds:true,okText:'确定',closeText:'取消',currentText:'现在',formatter:Global.dateTimeFormatter,parser:Global.dateTimeParse" style="width:180px">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" id="customer_table_search">查询</a>
+		</div>
+	</div>
+	<div id="customer_edit"></div>
+	<script type="text/javascript">
+		$(function() {
+			$('#customer_table').datagrid({
+			    url:'/customer/search',
+			    toolbar : '#customer_table_tb',
+			    method : 'get',
+			    idField : 'id',
+			    loadMsg : '正在加载......',
+			    emptyMsg : '没有记录',
+			    pagination : true,
+			    rownumbers : true,
+                pageNumber: 1,
+                pageSize: 10,
+                pageList: [10, 20, 30, 40, 50],  
+			    fit : true,
+			    singleSelect : true,
+			    queryParams : {},
+			    onBeforeLoad : function(params) {
+			    	params['name'] = $('#customer_name_term').val();
+			    	params['mobilePhone'] = $('#customer_mobilephone_term').val();
+			    	params['startTime'] = $('#customer_starttime_term').val();
+			    	params['endTime'] = $('#customer_endtime_term').val();
+			    	return true;
+			    },
+			    onLoadSuccess : function(data) {return true},
+			    columns:[[
+			        {field:'ck',checkbox:true},
+			        {field:'id', title:'ID', width:100, hidden : true},
+			        {field: 'name', title:'客户', width:100},
+			        {field: 'mobilePhone', title:'手机号码', width:100},
+			        {field: 'telePhone', title:'座机号码', width:100},
+			        {field: 'qq', title:'QQ', width:100},
+			        {field: 'wechat', title:'微信', width:100},
+			        {field: 'tradeName', title:'客户行业', width:140},
+			        {field: 'levelName', title:'客户级别', width:140},
+			        {field: 'company', title:'公司名称', width:100},
+			        {field: 'createTimeStr', title:'添加时间', width:180},
+			        {field: 'operate', title:'操作', width:100, formatter: this.operate}
+			    ]]
+			});
+			$('#customer_table').datagrid('getPager').pagination({  
+                beforePageText: '第',//页数文本框前显示的汉字   
+                afterPageText: '页    共 {pages} 页',  
+                displayMsg: '共 {total} 条记录',
+                onSelectPage: function(page, rows) {
+                	$('#customer_table').datagrid('gotoPage', page);
+                }
+            });
+			
+			$('#customer_table_search').on('click', function() {
+				$("#customer_table").datagrid('clearSelections').datagrid('clearChecked');
+				$('#customer_table').datagrid('reload');
+			});
+		});
+	</script>
+</body>
+</html>

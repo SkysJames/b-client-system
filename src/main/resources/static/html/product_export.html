@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<div id="customer_table_tb" style="padding:5px; height:auto">
+		<div>
+			<div style="margin-bottom: 15px;">关键字: <input class="easyui-textbox" style="width:180px" id="product_table_term"></div>
+		</div>
+		<div style="margin-bottom: 15px;">
+			导出列头： <input type="checkbox" value="name">&nbsp;产品名称
+                   <input type="checkbox" value="remark">&nbsp;备注
+		</div>
+		<div style="margin-bottom: 15px;">
+			<button id="choose_all_btn">全选</button>
+			<button id="cancel_all_btn">取消</button>
+		</div>
+		<div style="margin-bottom: 15px;">
+			<button id="export_btn">导出</button>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			$('#choose_all_btn').on('click', function(){
+				$('input[type=checkbox]').each(function(){
+					$(this).prop('checked', 'checked');
+				});
+			});
+			$('#cancel_all_btn').on('click', function(){
+				$('input[type=checkbox]').each(function(){
+					$(this).prop('checked', false);
+				});
+			});
+			$('#export_btn').on('click', function(){
+				var headers = [];
+				$('input[type=checkbox]:checked').each(function(){
+					headers.push($(this).val());
+				});
+				if (headers.length == 0) {
+					$.messager.alert('提示', '请选择要导出的列头');
+					return;
+				}
+				load('正在导出');
+				$.ajax({
+					url : '/product/export',
+					type : 'get',
+					data : {
+						headers : headers.join(','),
+						term : $('#product_table_term').val()
+					},
+					dataType : 'json',
+					success : function(data) {
+						disLoad();
+						if (data.code == 0) {
+							var code = data.data.code;
+							var name = data.data.name;
+							download(code, name);
+						} else {
+							$.messager.alert('提示', data.msg);
+						}
+					},
+					error : function() {
+						disLoad();
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

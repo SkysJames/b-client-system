@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<table id="role_table"></table>
+	<div id="role_table_tb" style="padding:5px; height:auto">
+		<div style="margin-bottom:5px">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="Role.add()">添加角色</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="Role.removeAll()">删除角色</a>
+		</div>
+		<div>
+			关键字: <input class="easyui-textbox" style="width:180px" id="role_table_term">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="Role.search()">查询</a>
+		</div>
+	</div>
+	<div id="role_edit"></div>
+	<script type="text/javascript" src="../js/role.js"></script>
+</body>
+</html>

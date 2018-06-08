@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<table id="user_table"></table>
+	<div id="user_table_tb" style="padding:5px; height:auto">
+		<div style="margin-bottom:5px">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="User.add()">添加员工</a>
+		</div>
+		<div>
+			姓名: <input class="easyui-textbox" style="width:180px" id="user_name_term">
+			工号: <input class="easyui-textbox" style="width:180px" id="user_empno_term">
+			部门：<input id="user_department_term" class="easyui-combobox" data-options="valueField:'id',textField:'name',url:'/department/listAll', method:'get',multiple:true">
+			状态：<input id="user_status_term" class="easyui-combobox" data-options="valueField:'id',textField:'text',url:'/user/listStatus', method:'get',multiple:true">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="User.search()">查询</a>
+		</div>
+	</div>
+	<div id="user_edit"></div>
+	<script type="text/javascript" src="../js/user.js"></script>
+</body>
+</html>

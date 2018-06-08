@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<div id="customer_table_tb" style="padding:5px; height:auto">
+		<div style="margin-bottom: 15px;">
+			订单类型：<input class="easyui-combobox" data-options="valueField:'id',textField:'text',url:'/order/listTypes', method:'get'" id="order_type_term">
+			订单状态：<input class="easyui-combobox" data-options="valueField:'id',textField:'text',url:'/order/listStatus', method:'get'" id="order_status_term">
+			账户名: <input class="easyui-textbox" style="width:180px" id="order_account_term">
+			手机号码: <input class="easyui-textbox" style="width:180px" id="order_mobilephone_term">
+			<br><div style="margin-top: 10px;"></div>
+			添加时间：<input class="easyui-datetimebox" id="order_starttime_term" data-options="showSeconds:true,okText:'确定',closeText:'取消',currentText:'现在',formatter:Global.dateTimeFormatter,parser:Global.dateTimeParse" style="width:180px">
+			至<input class="easyui-datetimebox" id="order_endtime_term" data-options="showSeconds:true,okText:'确定',closeText:'取消',currentText:'现在',formatter:Global.dateTimeFormatter,parser:Global.dateTimeParse" style="width:180px">
+		</div>
+		<div style="margin-bottom: 15px;">
+			导出列头： <input type="checkbox" value="type">&nbsp;订单类型
+                   <input type="checkbox" value="code">&nbsp;订单号
+                   <input type="checkbox" value="createTimeStr">&nbsp;录单日期
+                   <input type="checkbox" value="userName">&nbsp;录单人
+                   <input type="checkbox" value="customerName">&nbsp;客户
+                   <input type="checkbox" value="customerMobilePhone">&nbsp;手机号码
+                   <input type="checkbox" value="account">&nbsp;账号
+                   <input type="checkbox" value="productName">&nbsp;产品
+                   <input type="checkbox" value="customerPay">&nbsp;客户应付金额
+                   <input type="checkbox" value="costPrice">&nbsp;成本价
+                   <input type="checkbox" value="grossProfit">&nbsp;毛利
+                   <input type="checkbox" value="status">&nbsp;付款状态
+                   
+		</div>
+		<div style="margin-bottom: 15px;">
+			<button id="choose_all_btn">全选</button>
+			<button id="cancel_all_btn">取消</button>
+		</div>
+		<div style="margin-bottom: 15px;">
+			<button id="export_btn">导出</button>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			$('#choose_all_btn').on('click', function(){
+				$('input[type=checkbox]').each(function(){
+					$(this).prop('checked', 'checked');
+				});
+			});
+			$('#cancel_all_btn').on('click', function(){
+				$('input[type=checkbox]').each(function(){
+					$(this).prop('checked', false);
+				});
+			});
+			$('#export_btn').on('click', function(){
+				var headers = [];
+				$('input[type=checkbox]:checked').each(function(){
+					headers.push($(this).val());
+				});
+				if (headers.length == 0) {
+					$.messager.alert('提示', '请选择要导出的列头');
+					return;
+				}
+				load('正在导出');
+				$.ajax({
+					url : '/order/export',
+					type : 'get',
+					data : {
+						headers : headers.join(','),
+						account : $('#order_account_term').val(),
+			    		customerMobilePhone : $('#order_mobilephone_term').val(),
+			    		type : $('#order_type_term').val(),
+			    		status : $('#order_status_term').val(),
+			    		startTime : $('#order_starttime_term').val(),
+			    		endTime : $('#order_endtime_term').val()
+					},
+					dataType : 'json',
+					success : function(data) {
+						disLoad();
+						if (data.code == 0) {
+							var code = data.data.code;
+							var name = data.data.name;
+							download(code, name);
+						} else {
+							$.messager.alert('提示', data.msg);
+						}
+					},
+					error : function() {
+						disLoad();
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

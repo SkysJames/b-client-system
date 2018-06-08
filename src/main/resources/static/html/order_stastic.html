@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<div id="order_table_tb" style="padding:5px; height:auto">
+		<div>
+			<div style="margin-bottom: 15px;">操作员工: <input class="easyui-textbox" type="text" name="createUserId" data-options="required:false" id="createUserId" readonly="readonly"></input>
+    			    <a href="javascript:;" id="followUserIdSearch" class="textbox-icon searchbox-button" icon-index="0" tabindex="-1" style="width: 26px; height: 28px;"></a></div>
+    	    <div style="margin-bottom: 15px;">客户:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="easyui-textbox" type="text" name="customerId" data-options="required:false" id="customerId" readonly="readonly"></input>
+    			    <a href="javascript:;" id="customerIdSearch" class="textbox-icon searchbox-button" icon-index="0" tabindex="-1" style="width: 26px; height: 28px;"></a></div> 
+			<div style="margin-bottom: 15px;">产品名称: <input id="productId" name="productId" class="easyui-combobox" data-options="valueField:'id',textField:'name',url:'/product/listAll', method:'get'"></div>
+			<div style="margin-bottom: 15px;">添加时间：<input class="easyui-datetimebox" id="startTime" data-options="showSeconds:true,okText:'确定',closeText:'取消',currentText:'现在',formatter:Global.dateTimeFormatter,parser:Global.dateTimeParse" style="width:180px">
+			至<input class="easyui-datetimebox" id="endTime" data-options="showSeconds:true,okText:'确定',closeText:'取消',currentText:'现在',formatter:Global.dateTimeFormatter,parser:Global.dateTimeParse" style="width:180px"></div>
+		</div>
+		<div style="margin-bottom: 15px;">
+			<button id="search_btn">检索</button>
+		</div>
+		<div>
+			<table style="width: 100%;">
+				<tbody>
+					<tr style="line-height: 50px;">
+						<td>毛利总业绩:</td>
+						<td id="grossProfit1" style="color: red"></td>
+						<td>已付款业绩:</td>
+						<td id="paidProfit1" style="color: red"></td>
+						<td>未付款业绩:</td>
+						<td id="nonPayProfit1" style="color: red"></td>
+						<td>客户应付:</td>
+						<td id="customerPay1" style="color: red"></td>
+					</tr>
+					<tr style="line-height: 50px;">
+						<td>广告订单业绩:</td>
+						<td id="grossProfit2" style="color: red"></td>
+						<td>已付款业绩:</td>
+						<td id="paidProfit2" style="color: red"></td>
+						<td>未付款业绩:</td>
+						<td id="nonPayProfit2" style="color: red"></td>
+						<td>客户应付:</td>
+						<td id="customerPay2" style="color: red"></td>
+					</tr>
+					<tr style="line-height: 50px;">
+						<td>退款订单业绩:</td>
+						<td id="grossProfit3" style="color: red"></td>
+						<td>已付款业绩:</td>
+						<td id="paidProfit3" style="color: red"></td>
+						<td>未付款业绩:</td>
+						<td id="nonPayProfit3" style="color: red"></td>
+						<td>客户应付:</td>
+						<td id="customerPay3" style="color: red"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			$('#followUserIdSearch').on('click', function() {
+				var dialog = $('<div>');
+				$(dialog).dialog({
+					title : '选择用户',
+					resizable : true,
+					maximizable : true,
+					width: 700,
+				    height: 500,
+				    collapsible : true,
+				    modal : true,
+					href: '../html/user_select.html',
+					buttons : [{
+						text : '保存',
+						handler : function() {
+							var row = $('#user_table').datagrid('getSelected');
+							if (row) {
+								$('#createUserId').textbox('setValue', row.id);
+								$('#createUserId').textbox('setText', row.empNo);
+							} else {
+								$('#createUserId').textbox('setValue', '');
+								$('#createUserId').textbox('setText', '');
+							}
+							$(dialog).dialog('destroy');
+						}
+					}, {
+						text : '取消',
+						handler : function() {
+							$(dialog).dialog('destroy');
+						}
+					}]
+				});
+			});
+			
+			$('#customerIdSearch').on('click', function() {
+    			var dialog = $('<div>');
+				$(dialog).dialog({
+					title : '选择用户',
+					resizable : true,
+					maximizable : true,
+					width: 700,
+				    height: 500,
+				    collapsible : true,
+				    modal : true,
+					href: '../html/customer_select.html',
+					buttons : [{
+						text : '保存',
+						handler : function() {
+							var row = $('#customer_table').datagrid('getSelected');
+							if (row) {
+								$('#customerId').textbox('setValue', row.id);
+								$('#customerId').textbox('setText', row.name);
+							} else {
+								$('#customerId').textbox('setValue', '');
+								$('#customerId').textbox('setText', '');
+							}
+							$(dialog).dialog('destroy');
+						}
+					}, {
+						text : '取消',
+						handler : function() {
+							$(dialog).dialog('destroy');
+						}
+					}]
+				});
+    		});
+			
+			function getStatisticsInfo() {
+				$.ajax({
+					url : '/order/getStatisticsInfo',
+					type : 'get',
+					data : {
+						createUserId : $('#createUserId').val(),
+						customerId : $('#customerId').val(),
+						productId : $('#productId').val(),
+						startTime : $('#startTime').val(),
+						endTime : $('#endTime').val()
+					},
+					dataType : 'json',
+					success : function(data) {
+						if (data.code == 0) {
+							if (data.data) {
+								var grossProfit2,paidProfit2,nonPayProfit2,customerPay2;
+								var grossProfit3,paidProfit3,nonPayProfit3,customerPay3;
+								var rows = data.data;
+								for (var i = 0; i < rows.length; ++i) {
+									var rw = rows[i];
+									if (rw.type == '广告订单') {
+										grossProfit2 = rw['grossProfit'];
+										paidProfit2 = rw['paidProfit']
+										nonPayProfit2 = rw['nonPayProfit'];
+										customerPay2 = rw['customerPay'];
+									} else {
+										grossProfit3 = rw['grossProfit'];
+										paidProfit3 = rw['paidProfit']
+										nonPayProfit3 = rw['nonPayProfit'];
+										customerPay3 = rw['customerPay'];
+									}
+								}
+								
+								$('#grossProfit1').html(grossProfit2 - grossProfit3);
+								$('#paidProfit1').html(paidProfit2 - paidProfit3);
+								$('#nonPayProfit1').html(nonPayProfit2 - nonPayProfit3);
+								$('#customerPay1').html(customerPay2 - customerPay3);
+								
+								$('#grossProfit2').html(grossProfit2);
+								$('#paidProfit2').html(paidProfit2);
+								$('#nonPayProfit2').html(nonPayProfit2);
+								$('#customerPay2').html(customerPay2);
+								
+								$('#grossProfit3').html(grossProfit3);
+								$('#paidProfit3').html(paidProfit3);
+								$('#nonPayProfit3').html(nonPayProfit3);
+								$('#customerPay3').html(customerPay3);
+							} else {
+								$('#grossProfit1').html('0');
+								$('#paidProfit1').html('0');
+								$('#nonPayProfit1').html('0');
+								$('#customerPay1').html('0');
+								
+								$('#grossProfit2').html('0');
+								$('#paidProfit2').html('0');
+								$('#nonPayProfit2').html('0');
+								$('#customerPay2').html('0');
+								
+								$('#grossProfit3').html('0');
+								$('#paidProfit3').html('0');
+								$('#nonPayProfit3').html('0');
+								$('#customerPay3').html('0');
+							}
+							
+						} else {
+							$.messager.alert('提示', data.msg);
+						}
+					}
+				});
+			};
+			getStatisticsInfo();
+			
+			$('#search_btn').on('click', function(){
+				getStatisticsInfo();
+			});
+			
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<table id="product_table"></table>
+	<div id="product_table_tb" style="padding:5px; height:auto">
+		<div style="margin-bottom:5px">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="Product.add()">添加产品</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="Product.removeAll()">删除产品</a>
+		</div>
+		<div>
+			关键字: <input class="easyui-textbox" style="width:180px" id="product_table_term">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="Product.search()">查询</a>
+		</div>
+	</div>
+	<div id="product_edit"></div>
+	<script type="text/javascript" src="../js/product.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+[
+	{
+		"id" : "1",
+		"text" : "客户管理",
+		"children" : [
+			{
+				"id" : "11",
+				"text" : "客户信息",
+				"attributes" : {
+					"url" : "./html/customer.html"
+				}
+			},
+			{
+				"id" : "12",
+				"text" : "客户级别",
+				"attributes" : {
+					"url" : "./html/customer_level.html"
+				}
+			},
+			{
+				"id" : "13",
+				"text" : "客户行业",
+				"attributes" : {
+					"url" : "./html/customer_trade.html"
+				}
+			},
+			{
+				"id" : "14",
+				"text" : "客户导出",
+				"attributes" : {
+					"url" : "./html/customer_export.html"
+				}
+			}
+		]
+	},
+	{
+		"id" : "2",
+		"text" : "产品管理",
+		"children" : [
+			{
+				"id" : "21",
+				"text" : "产品信息",
+				"attributes" : {
+					"url" : "./html/product.html"
+				}
+			},
+			{
+				"id" : "23",
+				"text" : "产品导出",
+				"attributes" : {
+					"url" : "./html/product_export.html"
+				}
+			}
+		]
+	},
+	{
+		"id" : "3",
+		"text" : "销售单管理",
+		"children" : [
+			{
+				"id" : "31",
+				"text" : "销售单信息",
+				"attributes" : {
+					"url" : "./html/order.html"
+				}
+			},
+			{
+				"id" : "32",
+				"text" : "销售单统计",
+				"attributes" : {
+					"url" : "./html/order_stastic.html"
+				}
+			},
+			{
+				"id" : "33",
+				"text" : "销售单导出",
+				"attributes" : {
+					"url" : "./html/order_export.html"
+				}
+			}
+		]
+	},
+	{
+		"id" : "4",
+		"text" : "预约管理",
+		"children" : [
+			{
+				"id" : "41",
+				"text" : "预约信息",
+				"attributes" : {
+					"url" : "./html/appointment.html"
+				}
+			}
+		]
+	},
+	{
+		"id" : "5",
+		"text" : "系统管理",
+		"children" : [
+			{
+				"id" : "51",
+				"text" : "员工管理",
+				"attributes" : {
+					"url" : "./html/user.html"
+				}
+			},
+			{
+				"id" : "52",
+				"text" : "部门管理",
+				"attributes" : {
+					"url" : "./html/department.html"
+				}
+			},
+			{
+				"id" : "53",
+				"text" : "角色管理",
+				"attributes" : {
+					"url" : "./html/role.html"
+				}
+			},
+			{
+				"id" : "54",
+				"text" : "权限说明",
+				"attributes" : {
+					"url" : "./html/resource.html"
+				}
+			},
+			{
+				"id" : "55",
+				"text" : "数据维护",
+				"attributes" : {
+					"url" : "./html/databackup.html"
+				}
+			}
+		]
+	}
+]

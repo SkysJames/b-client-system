@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.form.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.validatebox.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<form id="customer_level_edit_form" class="easyui-form" method="post" data-options="novalidate:true">
+		<input type="hidden" name="id" id="id"/>
+    	<table cellpadding="5">
+    		<tr>
+    			<td>客户级别名称:</td>
+    			<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" id="name"></input></td>
+    		</tr>
+    		<tr>
+    			<td>备注:</td>
+    			<td><input class="easyui-textbox" name="remark" data-options="multiline:true" style="height:80px; width: 200px;" id="remark"></input></td>
+    		</tr>
+    	</table>
+    </form>
+</body>
+</html>
