@@ -94,4 +94,8 @@ public class UserRepository extends BaseEntityRepository<User, Integer> {
 		return set;
 	}
 
+	public List<Map<String, Object>> getStatusCount() {
+		return this.listByNativeSql("select u.`status`, count(*) cnt from sys_user u GROUP BY u.`status`", null);
+	}
+
 }

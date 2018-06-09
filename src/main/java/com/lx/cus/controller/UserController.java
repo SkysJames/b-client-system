@@ -3,6 +3,7 @@ package com.lx.cus.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,6 +96,16 @@ public class UserController {
 	@GetMapping(value = "/listAll")
 	public List<User> listAll() {
 		return this.userService.listAll();
+	}
+	
+	@PostMapping(value = "/changePassword")
+	public Response changePassword(User user) {
+		return this.userService.changePassword(user);
+	}
+	
+	@GetMapping(value = "/getStatusCount")
+	public List<Map<String, Object>> getStatusCount() {
+		return this.userService.getStatusCount();
 	}
 
 }

@@ -87,46 +87,41 @@ $(function() {
 					buttons : [{
 						text : '保存',
 						handler : function() {
-							/*$('#databackup_edit_form').form('submit', {
-							    url:'/databackup/save',
-							    onSubmit : function(){
-							        return $(this).form('enableValidation').form('validate');
-							    },
-							    success : function(data) {
-							    	var data = eval('(' + data + ')');
-							    	if (data.code == 0) {
-							    		$(dialog).dialog('destroy');
-							    		DataBackup.search();
-							    	} else {
-							    		$.messager.alert('提示', data.msg);
-							    	}
-							    }
-							});*/
 							var row = $('#databackup_edit_table').datagrid('getChecked');
 							if (!row || row.length == 0) {
 								$.messager.alert('提示', '请选择要备份的表');
 								return;
 							}
-							load(row.tableName + '备份执行中...');
-							$.ajax({
-								url : '/databackup/save',
-								type : 'post',
-								data : {
-									tableName : row[0].tableName,
-									remark : row[0].remark
-								},
-								dataType : 'json',
-								success : function(data) {
-									disLoad();
-									if (data.code == 0) {
-							    		$(dialog).dialog('destroy');
-							    		DataBackup.search();
-							    	} else {
-							    		$.messager.alert('提示', data.msg);
-							    	}
-								},
-								error : function() {
-									disLoad();
+							$.messager.confirm({
+								title : '警告',
+								msg : '备份期间可能会影响系统使用，确定备份？',
+								ok : '确定',
+								cancel : '取消',
+								fn : function(r) {
+									if (r) {
+										load(row.tableName + '备份执行中...');
+										$.ajax({
+											url : '/databackup/save',
+											type : 'post',
+											data : {
+												tableName : row[0].tableName,
+												remark : row[0].remark
+											},
+											dataType : 'json',
+											success : function(data) {
+												disLoad();
+												if (data.code == 0) {
+										    		$(dialog).dialog('destroy');
+										    		DataBackup.search();
+										    	} else {
+										    		$.messager.alert('提示', data.msg);
+										    	}
+											},
+											error : function() {
+												disLoad();
+											}
+										});
+									}
 								}
 							});
 						}

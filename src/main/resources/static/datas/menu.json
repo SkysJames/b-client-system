@@ -1,4 +1,16 @@
-[
+[	{
+		"id" : "0",
+		"text" : "个人信息",
+		"children" : [
+			{
+				"id" : "01",
+				"text" : "修改密码",
+				"attributes" : {
+					"url" : "../html/password.html"
+				}
+			}
+		]
+	},
 	{
 		"id" : "1",
 		"text" : "客户管理",

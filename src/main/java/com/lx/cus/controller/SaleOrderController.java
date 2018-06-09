@@ -119,5 +119,10 @@ public class SaleOrderController {
 	    data.put("name", "销售单信息" + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + ".xlsx");
 	    return new Response(0, "", data);
 	}
+	
+	@GetMapping(value = "/getTypeCount")
+	public List<Map<String, Object>> getTypeCount() {
+		return this.saleOrderService.getTypeCount();
+	}
 
 }

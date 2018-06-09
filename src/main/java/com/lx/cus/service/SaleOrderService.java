@@ -3,6 +3,7 @@ package com.lx.cus.service;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -121,6 +122,10 @@ public class SaleOrderService {
 		SecurityUtils.checkPermission(ApplicationConsts.Auth.SALES_STASTIC);
 		List<SaleOrderStatisticsVo> vos = this.saleOrderRepository.getStatisticsInfo(saleOrder);
 		return new Response(0, "", vos);
+	}
+
+	public List<Map<String, Object>> getTypeCount() {
+		return this.saleOrderRepository.getTypeCount();
 	}
 
 }

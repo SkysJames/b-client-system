@@ -106,4 +106,8 @@ public class SaleOrderRepository extends BaseEntityRepository<SaleOrder, Integer
 		return BeanUtil.mapToBean(rows, SaleOrderStatisticsVo.class);
 	}
 
+	public List<Map<String, Object>> getTypeCount() {
+		return this.listByNativeSql("select o.type, count(*) cnt from sale_order o where o.is_valid = 1 group by o.type", null);
+	}
+
 }

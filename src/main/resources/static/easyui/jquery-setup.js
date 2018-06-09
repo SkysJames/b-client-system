@@ -10,6 +10,15 @@ $.ajaxSetup({
 	}
 });
 
+$.extend($.fn.validatebox.defaults.rules, {
+    equals: {
+        validator: function(value,param){
+            return value == $(param[0]).val();
+        },
+        message: '字段不相等'
+    }
+});
+
 var Global = {
 		dateTimeFormatter : function(date) {
 			var y = date.getFullYear();

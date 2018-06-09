@@ -1,10 +1,12 @@
 package com.lx.cus.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.util.StringUtils;
 import com.lx.cus.common.ApplicationConsts;
 import com.lx.cus.entity.User;
 import com.lx.cus.entity.UserRole;
+import com.lx.cus.repository.DepartmentRepository;
 import com.lx.cus.repository.UserRepository;
 import com.lx.cus.repository.UserRoleRepository;
 import com.lx.cus.util.BeanUtil;
@@ -29,6 +32,9 @@ public class UserService {
 	
 	@Autowired
 	private UserRoleRepository userRoleRepository;
+	
+	@Autowired
+	private DepartmentRepository departmentRepository;
 	
 	private static final String DEFAULT_PASSWORD = "123456";
 	
@@ -94,6 +100,8 @@ public class UserService {
 		}
 		
 		user.setPermissions(this.userRepository.listPermissions(user.getId()));
+		user.setDepartmentName(this.departmentRepository.get(user.getDepartmentId()).getName());
+		user.setLastLoginTimeStr(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getLastLoginTime()));
 		SecurityUtils.setCurrentUser(user);
 		user.setLastLoginTime(new Date());
 		this.userRepository.updateLastLoginTime(user.getId(), user.getLastLoginTime());
@@ -133,6 +141,24 @@ public class UserService {
 
 	public List<User> listAll() {
 		return this.userRepository.listAll();
+	}
+
+	public Response changePassword(User user) {
+		User currentUser = SecurityUtils.getCurrentUser();
+		User old = this.userRepository.get(currentUser.getId());
+		if (!old.getPassword().equals(user.getPassword())) {
+			return new Response(-1, "密码错误", null);
+		}
+		old.setPassword(user.getNewPassword());
+		old.setUpdateTime(new Date());
+		old.setUpdateUserId(old.getId());
+		
+		this.userRepository.update(old);
+		return new Response(0, "密码修改成功", null);
+	}
+
+	public List<Map<String, Object>> getStatusCount() {
+		return this.userRepository.getStatusCount();
 	}
 	
 }

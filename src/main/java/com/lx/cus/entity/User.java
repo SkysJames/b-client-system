@@ -76,6 +76,9 @@ public class User implements BaseEntity<Integer> {
 	@Transient
 	private String departmentIds;
 	
+	@Transient
+	private String newPassword;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -226,6 +229,14 @@ public class User implements BaseEntity<Integer> {
 
 	public void setDepartmentIds(String departmentIds) {
 		this.departmentIds = departmentIds;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 	
 }
