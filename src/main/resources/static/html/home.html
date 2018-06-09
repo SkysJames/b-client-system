@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>客户管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery-setup.js"></script>
+</head>
+<body>
+	<div class="easyui-accordion" data-options="multiple:true" style="width:95%;margin: auto;margin-top: 10px;">
+        <div title="个人信息" style="padding: 10px;" data-options="collapsed:false,collapsible:false">
+        	<table>
+        		<tbody>
+        			<tr style="line-height: 50px;">
+        				<td>姓名：</td>
+        				<td id="username"></td>
+        			</tr>
+        			<tr style="line-height: 50px;">
+        				<td>部门：</td>
+        				<td id="departmentName"></td>
+        			</tr>
+        			<tr style="line-height: 50px;">
+        				<td>工号：</td>
+        				<td id="empNo"></td>
+        			</tr>
+        			<tr style="line-height: 50px;">
+        				<td>上一次登录时间：</td>
+        				<td id="lastLoginTimeStr"></td>
+        			</tr>
+        		</tbody>
+        	</table>
+        </div>
+        <div title="用户统计" style="padding: 10px;" data-options="collapsed:false,collapsible:false">
+        	<table>
+        		<tbody>
+        			<tr style="line-height: 50px;">
+        				<td>员工总数：</td>
+        				<td id="user_total"></td>
+        			</tr>
+        			<tr style="line-height: 50px;">
+        				<td>在职员工：</td>
+        				<td id="user_on"></td>
+        			</tr>
+        			<tr style="line-height: 50px;">
+        				<td>离职员工：</td>
+        				<td id="user_leave"></td>
+        			</tr>
+        			<tr style="line-height: 50px;">
+        				<td>锁定员工：</td>
+        				<td id="user_lock"></td>
+        			</tr>
+        		</tbody>
+        	</table>
+        </div>
+        <div title="销售单统计" style="padding: 10px;" data-options="collapsed:false,collapsible:false">
+        	<table>
+        		<tbody>
+        			<tr style="line-height: 50px;">
+        				<td>销售单总数：</td>
+        				<td id="order_total"></td>
+        			</tr>
+        			<tr style="line-height: 50px;">
+        				<td>广告订单：</td>
+        				<td id="order_ad"></td>
+        			</tr>
+        			<tr style="line-height: 50px;">
+        				<td>退款订单：</td>
+        				<td id="order_refund"></td>
+        			</tr>
+        		</tbody>
+        	</table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    	$(function(){
+    		load('初始化数据...');
+    		$.ajax({
+    			url : '/user/getCurrentUser',
+    			type : 'get',
+    			dataType : 'json',
+    			success : function(user) {
+    				$('#username').html(user.name);
+    				$('#departmentName').html(user.departmentName);
+    				$('#empNo').html(user.empNo);
+    				$('#lastLoginTimeStr').html(user.lastLoginTimeStr);
+    				disCountLink();
+    			}
+    		});
+    		
+    		$.ajax({
+    			url : '/user/getStatusCount',
+    			type : 'get',
+    			dataType : 'json',
+    			success : function(data) {
+    				var userOn ;
+    				var userLeave ;
+    				var userLock ;
+    				for (var i = 0; i < data.length; ++i) {
+    					var status = data[i]['status'];
+    					var cnt = data[i]['cnt'];
+    					if ('在职' == status) {
+    						userOn = cnt;
+    					} else if ('离职' == status) {
+    						userLeave = cnt;
+    					} else if ('锁定' == status) {
+    						userLock = cnt;
+    					}
+    				}
+    				userOn = userOn || 0;
+    				userLeave = userLeave || 0;
+    				userLock = userLock || 0;
+    				$('#user_on').html(userOn);
+    				$('#user_leave').html(userLeave);
+    				$('#user_lock').html(userLock);
+    				$('#user_total').html(userOn + userLeave + userLock);
+    				disCountLink();
+    			}
+    		});
+    		
+    		$.ajax({
+    			url : '/order/getTypeCount',
+    			type : 'get',
+    			dataType : 'json',
+    			success : function(data) {
+    				var orderAd ;
+    				var orderRefund ;
+    				for (var i = 0; i < data.length; ++i) {
+    					var type = data[i]['type'];
+    					var cnt = data[i]['cnt'];
+    					if ('广告订单' == type) {
+    						orderAd = cnt;
+    					} else if ('退款订单' == type) {
+    						orderRefund = cnt;
+    					}
+    				}
+    				orderAd = orderAd || 0;
+    				orderRefund = orderRefund || 0;
+    				$('#order_ad').html(orderAd);
+    				$('#order_refund').html(orderRefund);
+    				$('#order_total').html(orderAd + orderRefund);
+    				disCountLink();
+    			}
+    		});
+    		
+    		var linkCnt = 3;
+    		function disCountLink() {
+    			linkCnt--;
+    			if (linkCnt == 0) {
+    				disLoad();
+    			}
+    		}
+    	});
+    </script>
+</body>
+</html>
