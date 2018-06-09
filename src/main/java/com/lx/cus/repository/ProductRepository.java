@@ -39,4 +39,16 @@ public class ProductRepository extends BaseEntityRepository<Product, Integer> {
 		return rows != null && !rows.isEmpty() ? rows.get(0) : null;
 	}
 
+	public boolean existAppoinment(Integer id) {
+		String sql = "select count(*) from appointment a where a.product_id = " + id + " limit 0, 1";
+		int count = this.countByNativeSql(sql, null).intValue();
+		return count > 0;
+	}
+
+	public boolean existSaleOrder(Integer id) {
+		String sql = "select count(*) from sale_order a where a.product_id = " + id + " limit 0, 1";
+		int count = this.countByNativeSql(sql, null).intValue();
+		return count > 0;
+	}
+
 }

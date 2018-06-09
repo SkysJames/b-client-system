@@ -73,19 +73,18 @@
 	             $("#showMsg").html("用户名或密码为空，请输入");
 	             $("input[name='username']").focus();
 	        }else{
-	        	//load('正在登录...');
-	        	$("#showMsg").html('正在登录...');
+	        	load('正在登录...');
 	             $.ajax({
 	                type:"post",
 	                url : "/user/login",
 	                data : $("#loginForm").serialize(), 
 	                dataType : 'json',
 	                error : function(request) {
-	                	//disLoad();
+	                	disLoad();
 	                    $("#showMsg").html("系统出错");
 	                },
 	                success:function(data) {
-	                	//disLoad();
+	                	disLoad();
 	                    if (data.code == 0) {
 	                    	window.location.href = '/index.html';
 	                    } else {

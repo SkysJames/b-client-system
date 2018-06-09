@@ -87,9 +87,14 @@ $(function() {
 							$('#customer_trade_edit_form').form('submit', {
 							    url:'/customer_trade/save',
 							    onSubmit : function(){
-							        return $(this).form('enableValidation').form('validate');
+							    	var check = $(this).form('enableValidation').form('validate');
+							    	if (check) {
+							    		load('正在执行...');
+							    	}
+							        return check;
 							    },
 							    success : function(data) {
+							    	disLoad();
 							    	var data = eval('(' + data + ')');
 							    	if (data.code == 0) {
 							    		$(dialog).dialog('destroy');
@@ -131,9 +136,14 @@ $(function() {
 							$('#customer_trade_edit_form').form('submit', {
 							    url:'/customer_trade/update',
 							    onSubmit : function(){
-							        return $(this).form('enableValidation').form('validate');
+							    	var check = $(this).form('enableValidation').form('validate');
+							    	if (check) {
+							    		load('正在执行...');
+							    	}
+							        return check;
 							    },
 							    success : function(data) {
+							    	disLoad();
 							    	var data = eval('(' + data + ')');
 							    	if (data.code == 0) {
 							    		$(dialog).dialog('destroy');
@@ -167,6 +177,7 @@ $(function() {
 					cancel : '取消',
 					fn : function(r) {
 						if (r) {
+							load('正在执行...');
 							$.ajax({
 								url : '/customer_trade/delete',
 								data : {
@@ -175,6 +186,7 @@ $(function() {
 								type : 'post',
 								dataType : 'json',
 								success : function(data) {
+									disLoad();
 									if (data.code == 0) {
 							    		CustomerTrade.search();
 							    	} else {
@@ -204,6 +216,7 @@ $(function() {
 					cancel : '取消',
 					fn : function(r) {
 						if (r) {
+							load('正在执行...');
 							$.ajax({
 								url : '/customer_trade/delete',
 								data : {
@@ -212,6 +225,7 @@ $(function() {
 								type : 'post',
 								dataType : 'json',
 								success : function(data) {
+									disLoad();
 									if (data.code == 0) {
 							    		CustomerTrade.search();
 							    	} else {

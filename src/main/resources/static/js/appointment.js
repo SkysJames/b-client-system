@@ -99,9 +99,14 @@ $(function() {
 							$('#appointment_edit_form').form('submit', {
 							    url:'/appointment/save',
 							    onSubmit : function(){
-							        return $(this).form('enableValidation').form('validate');
+							    	var check = $(this).form('enableValidation').form('validate');
+							    	if (check) {
+							    		load('正在执行...');
+							    	}
+							        return check;
 							    },
 							    success : function(data) {
+							    	disLoad();
 							    	var data = eval('(' + data + ')');
 							    	if (data.code == 0) {
 							    		$(dialog).dialog('destroy');
@@ -143,9 +148,14 @@ $(function() {
 							$('#appointment_edit_form').form('submit', {
 							    url:'/appointment/update',
 							    onSubmit : function(){
-							        return $(this).form('enableValidation').form('validate');
+							    	var check = $(this).form('enableValidation').form('validate');
+							    	if (check) {
+							    		load('正在执行...');
+							    	}
+							        return check;
 							    },
 							    success : function(data) {
+							    	disLoad();
 							    	var data = eval('(' + data + ')');
 							    	if (data.code == 0) {
 							    		$(dialog).dialog('destroy');
@@ -199,6 +209,7 @@ $(function() {
 					cancel : '取消',
 					fn : function(r) {
 						if (r) {
+							load('正在执行...');
 							$.ajax({
 								url : '/appointment/delete',
 								data : {
@@ -207,6 +218,7 @@ $(function() {
 								type : 'post',
 								dataType : 'json',
 								success : function(data) {
+									disLoad();
 									if (data.code == 0) {
 							    		Appointment.search();
 							    	} else {
@@ -236,6 +248,7 @@ $(function() {
 					cancel : '取消',
 					fn : function(r) {
 						if (r) {
+							load('正在执行...');
 							$.ajax({
 								url : '/appointment/delete',
 								data : {
@@ -244,6 +257,7 @@ $(function() {
 								type : 'post',
 								dataType : 'json',
 								success : function(data) {
+									disLoad();
 									if (data.code == 0) {
 							    		Appointment.search();
 							    	} else {
@@ -265,6 +279,7 @@ $(function() {
 					cancel : '取消',
 					fn : function(r) {
 						if (r) {
+							load('正在执行...');
 							$.ajax({
 								url : '/appointment/update',
 								data : {
@@ -274,6 +289,7 @@ $(function() {
 								type : 'post',
 								dataType : 'json',
 								success : function(data) {
+									disLoad();
 									if (data.code == 0) {
 							    		Appointment.search();
 							    	} else {
@@ -307,6 +323,7 @@ $(function() {
 								$.messager.alert('提示', '请输入回访信息');
 								return;
 							}
+							load('正在执行...');
 							$.ajax({
 								url : '/appointment/addTip',
 								type : 'post',
@@ -316,6 +333,7 @@ $(function() {
 								},
 								dataType : 'json',
 								success : function(data) {
+									disLoad();
 									if (data.code == 0) {
 										$('#appointment_tip_form').find('#tip').textbox('setValue', '');
 										$('#appointment_tips_table').propertygrid('reload');

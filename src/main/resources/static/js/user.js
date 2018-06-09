@@ -98,9 +98,14 @@ $(function() {
 							$('#user_edit_form').form('submit', {
 							    url:'/user/save',
 							    onSubmit : function(){
-							        return $(this).form('enableValidation').form('validate');
+							    	var check = $(this).form('enableValidation').form('validate');
+							    	if (check) {
+							    		load('正在执行...');
+							    	}
+							        return check;
 							    },
 							    success : function(data) {
+							    	disLoad();
 							    	var data = eval('(' + data + ')');
 							    	if (data.code == 0) {
 							    		$(dialog).dialog('destroy');
@@ -142,9 +147,14 @@ $(function() {
 							$('#user_edit_form').form('submit', {
 							    url:'/user/update',
 							    onSubmit : function(){
-							        return $(this).form('enableValidation').form('validate');
+							    	var check = $(this).form('enableValidation').form('validate');
+							    	if (check) {
+							    		load('正在执行...');
+							    	}
+							        return check;
 							    },
 							    success : function(data) {
+							    	disLoad();
 							    	var data = eval('(' + data + ')');
 							    	if (data.code == 0) {
 							    		$(dialog).dialog('destroy');
@@ -258,6 +268,7 @@ $(function() {
 							for (var i = 0; i < rows.length; ++i) {
 								ids.push(rows[i].id);
 							}
+							load('正在执行...');
 							$.ajax({
 								url : '/user/authorize',
 								data : {
@@ -267,6 +278,7 @@ $(function() {
 								type : 'post',
 								dataType : 'json',
 								success : function(data) {
+									disLoad();
 									if (data.code == 0) {
 										$(dialog).dialog('destroy');
 										$.messager.alert('提示', '角色绑定成功');

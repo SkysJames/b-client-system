@@ -9,6 +9,14 @@ $(function() {
 				Index.tabMenu();
 				Index.Auth.init();
 				Index.onTabSelect();
+				
+				//初始化首页
+				var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='./html/home.html'></iframe>"
+		        $("#tabs").tabs("add",{
+		            title : '首页',
+		            closable : false,
+		            content : content
+		        });
 			},
 			
 			tabMenu : function() {

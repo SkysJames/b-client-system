@@ -89,9 +89,14 @@ $(function() {
 							$('#role_edit_form').form('submit', {
 							    url:'/role/save',
 							    onSubmit : function(){
-							        return $(this).form('enableValidation').form('validate');
+							    	var check = $(this).form('enableValidation').form('validate');
+							    	if (check) {
+							    		load('正在执行...');
+							    	}
+							        return check;
 							    },
 							    success : function(data) {
+							    	disLoad();
 							    	var data = eval('(' + data + ')');
 							    	if (data.code == 0) {
 							    		$(dialog).dialog('destroy');
@@ -133,9 +138,14 @@ $(function() {
 							$('#role_edit_form').form('submit', {
 							    url:'/role/update',
 							    onSubmit : function(){
-							        return $(this).form('enableValidation').form('validate');
+							    	var check = $(this).form('enableValidation').form('validate');
+							    	if (check) {
+							    		load('正在执行...');
+							    	}
+							        return check;
 							    },
 							    success : function(data) {
+							    	disLoad();
 							    	var data = eval('(' + data + ')');
 							    	if (data.code == 0) {
 							    		$(dialog).dialog('destroy');
@@ -169,6 +179,7 @@ $(function() {
 					cancel : '取消',
 					fn : function(r) {
 						if (r) {
+							load('正在执行...');
 							$.ajax({
 								url : '/role/delete',
 								data : {
@@ -177,6 +188,7 @@ $(function() {
 								type : 'post',
 								dataType : 'json',
 								success : function(data) {
+									disLoad();
 									if (data.code == 0) {
 							    		Role.search();
 							    	} else {
@@ -206,6 +218,7 @@ $(function() {
 					cancel : '取消',
 					fn : function(r) {
 						if (r) {
+							load('正在执行...');
 							$.ajax({
 								url : '/role/delete',
 								data : {
@@ -214,6 +227,7 @@ $(function() {
 								type : 'post',
 								dataType : 'json',
 								success : function(data) {
+									disLoad();
 									if (data.code == 0) {
 							    		Role.search();
 							    	} else {
@@ -247,6 +261,7 @@ $(function() {
 							for (var i = 0; i < rows.length; ++i) {
 								ids.push(rows[i].id);
 							}
+							load('正在执行...');
 							$.ajax({
 								url : '/role/authorize',
 								data : {
@@ -256,6 +271,7 @@ $(function() {
 								type : 'post',
 								dataType : 'json',
 								success : function(data) {
+									disLoad();
 									if (data.code == 0) {
 										$(dialog).dialog('destroy');
 										$.messager.alert('提示', '授权成功');

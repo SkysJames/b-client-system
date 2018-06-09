@@ -84,6 +84,11 @@ public class ProductService {
 		if (ids == null || ids.length == 0) {
 			return new Response(-1, "删除的产品不能为空", null);
 		}
+		for (Integer id : ids) {
+			if (this.productRepository.existAppoinment(id) || this.productRepository.existSaleOrder(id)) {
+				return new Response(-1, "产品已被使用，不可删除", null);
+			}
+		}
 	    productRepository.batchDelete(ids);
 		return new Response(0, "删除成功", null);
 	}

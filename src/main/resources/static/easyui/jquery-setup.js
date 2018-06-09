@@ -2,7 +2,6 @@ var contextPath = '/cm';
 
 $.ajaxSetup({
 	complete : function(data, ts) {
-		console.log(data);
 		//如果是登录页面，跳转
 		if (data.responseText.indexOf('id="login-window"') >= 0) {
 			window.top.location.href = '/login.html';
@@ -56,12 +55,12 @@ var Global = {
 };
 
 function load(msg) {
-	$("<div class=\"datagrid-mask\"></div>").css({
+	$("<div class=\"datagrid-mask\" style=\"z-index: 10000\"></div>").css({
 		display : "block",
 		width : "100%",
 		height : $(window).height()
 	}).appendTo("body");
-	$("<div class=\"datagrid-mask-msg\"></div>").html(msg).appendTo(
+	$("<div class=\"datagrid-mask-msg\" style=\"z-index: 10005\"></div>").html(msg).appendTo(
 			"body").css({
 		display : "block",
 		left : ($(document.body).outerWidth(true) - 190) / 2,
