@@ -192,7 +192,6 @@ create table sale_order (
 	create_user_id int unsigned not null,
 	update_time datetime not null,
 	update_user_id int unsigned not null,
-	is_valid tinyint(1) not null default 1 comment '是否有效',
 	primary key (id),
 	unique UK_CODE (code),
 	key INX_CREATE_TIME (create_time)

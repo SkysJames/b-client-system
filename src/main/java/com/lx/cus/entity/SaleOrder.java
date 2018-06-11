@@ -37,6 +37,8 @@ public class SaleOrder implements BaseEntity<Integer> {
 		
 		public static final String CUSTOMER_REFUND = "客户已退款";
 		
+		public static final String ORDER_INVALID = "订单作废";
+		
 	}
 	
 	@Id
@@ -94,9 +96,6 @@ public class SaleOrder implements BaseEntity<Integer> {
 	
 	@Column(name = "update_user_id")
 	private Integer updateUserId;
-	
-	@Column(name = "is_valid")
-	private Boolean valid;
 	
 	@Transient
 	private String createTimeStr;
@@ -261,14 +260,6 @@ public class SaleOrder implements BaseEntity<Integer> {
 
 	public void setUpdateUserId(Integer updateUserId) {
 		this.updateUserId = updateUserId;
-	}
-
-	public Boolean getValid() {
-		return valid;
-	}
-
-	public void setValid(Boolean valid) {
-		this.valid = valid;
 	}
 
 	public String getCreateTimeStr() {

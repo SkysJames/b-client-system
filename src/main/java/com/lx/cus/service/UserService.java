@@ -101,7 +101,11 @@ public class UserService {
 		
 		user.setPermissions(this.userRepository.listPermissions(user.getId()));
 		user.setDepartmentName(this.departmentRepository.get(user.getDepartmentId()).getName());
-		user.setLastLoginTimeStr(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getLastLoginTime()));
+		if (user.getLastLoginTime() != null) {
+			user.setLastLoginTimeStr(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getLastLoginTime()));
+		} else {
+			user.setLastLoginTimeStr("-");
+		}
 		SecurityUtils.setCurrentUser(user);
 		user.setLastLoginTime(new Date());
 		this.userRepository.updateLastLoginTime(user.getId(), user.getLastLoginTime());

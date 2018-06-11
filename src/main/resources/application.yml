@@ -10,11 +10,14 @@ spring:
   jpa:
     database: MYSQL
     show-sql: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 
 logging:
   file: /logs/lx/customer-manager.log
   level:
     com.lx.cus : WARN
+    
     
 lx: 
   data-backup-path: /lx-backup/data

@@ -44,7 +44,6 @@ public class SaleOrderService {
 		saleOrder.setStatus(SaleOrder.Status.PAYMENT_NON);
 		saleOrder.setUpdateTime(saleOrder.getCreateTime());
 		saleOrder.setUpdateUserId(user.getId());
-		saleOrder.setValid(true);
 		
 //		客户充值的广告币、
 //		客户返点、
@@ -93,19 +92,6 @@ public class SaleOrderService {
 		
 		this.saleOrderLogRepository.save(log);
 		return new Response(0, "修改成功", null);
-	}
-
-	public Response invalid(Integer[] ids) {
-		SecurityUtils.checkPermission(ApplicationConsts.Auth.SALES_MANAGER);
-		User user = SecurityUtils.getCurrentUser();
-		for (Integer id : ids) {
-			SaleOrder saleOrder = this.saleOrderRepository.get(id);
-			saleOrder.setValid(false);
-			saleOrder.setUpdateTime(new Date());
-			saleOrder.setUpdateUserId(user.getId());
-			this.saleOrderRepository.update(saleOrder);
-		}
-		return new Response(0, "作废成功", null);
 	}
 
 	public Response updateStatus(Integer[] ids, String status) {

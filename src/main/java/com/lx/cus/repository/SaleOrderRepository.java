@@ -22,7 +22,7 @@ public class SaleOrderRepository extends BaseEntityRepository<SaleOrder, Integer
 					       "c.mobile_phone customerMobilePhone, o.account, o.remark, o.`status`," +
 					       "o.cost_price costPrice, o.customer_pay customerPay, o.gross_profit grossProfit " +
 					 "from sale_order o, customer c, product p, sys_user u " +
-					 "where o.customer_id = c.id and o.product_id = p.id and o.create_user_id = u.id and o.is_valid = 1 ";
+					 "where o.customer_id = c.id and o.product_id = p.id and o.create_user_id = u.id ";
 		Map<String, Object> params = new HashMap<>();
 		if (StringUtils.hasText(saleOrder.getType())) {
 			sql += " and o.type = :type ";
@@ -66,7 +66,7 @@ public class SaleOrderRepository extends BaseEntityRepository<SaleOrder, Integer
 				"       sum(case when o.`status` <> '未付款' then o.gross_profit else 0 end) paidProfit, " +
 				"       sum(o.customer_pay) customerPay " +
 				"from sale_order o " +
-				"where o.is_valid = 1 ";
+				"where 1 = 1 ";
 		Map<String, Object> params = new HashMap<>();
 		if (saleOrder.getCustomerId() != null) {
 			sql += " and o.customer_id = :customerId ";
@@ -107,7 +107,7 @@ public class SaleOrderRepository extends BaseEntityRepository<SaleOrder, Integer
 	}
 
 	public List<Map<String, Object>> getTypeCount() {
-		return this.listByNativeSql("select o.type, count(*) cnt from sale_order o where o.is_valid = 1 group by o.type", null);
+		return this.listByNativeSql("select o.type, count(*) cnt from sale_order o  group by o.type", null);
 	}
 
 }

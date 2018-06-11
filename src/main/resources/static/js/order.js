@@ -50,6 +50,9 @@ $(function() {
 				    	if (row.status == '已完结' || row.status == '客户已退款') {
 				    		return "color:red";
 				    	}
+				    	if (row.status == '订单作废') {
+				    		return "color:#aaa";
+				    	}
 				    }
 				});
 				$('#order_table').datagrid('getPager').pagination({  
@@ -282,9 +285,10 @@ $(function() {
 						if (r) {
 							load('正在执行...');
 							$.ajax({
-								url : '/order/invalid',
+								url : '/order/updateStatus',
 								data : {
-									ids : ids
+									ids : ids,
+									status : '订单作废'
 								},
 								type : 'post',
 								dataType : 'json',

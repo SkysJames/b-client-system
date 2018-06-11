@@ -29,7 +29,7 @@ public class CustomerService {
 	}
 
 	public Response save(Customer customer) {
-		SecurityUtils.checkPermission(ApplicationConsts.Auth.CUSTOMER_MANAGER);
+		//SecurityUtils.checkPermission(ApplicationConsts.Auth.CUSTOMER_MANAGER);
 		User user = SecurityUtils.getCurrentUser();
 		Date now = new Date();
 		customer.setCreateTime(now);

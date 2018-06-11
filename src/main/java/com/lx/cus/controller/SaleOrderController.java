@@ -48,15 +48,6 @@ public class SaleOrderController {
 		return this.saleOrderService.updateStatus(ids, status);
 	}
 	
-	/**
-	 * 作废
-	 * @return
-	 */
-	@PostMapping(value = "/invalid")
-	public Response invalid(@RequestParam("ids[]") Integer[] ids) {
-		return this.saleOrderService.invalid(ids);
-	}
-	
 	@GetMapping(value = "/listTypes")
 	public List<ComboVo> listTypes() {
 		List<ComboVo> comboVos = new ArrayList<>(2);
@@ -73,6 +64,7 @@ public class SaleOrderController {
 		comboVos.add(new ComboVo(SaleOrder.Status.PAYMENT_FINISH, SaleOrder.Status.PAYMENT_FINISH));
 		comboVos.add(new ComboVo(SaleOrder.Status.AGENT_REFUND, SaleOrder.Status.AGENT_REFUND));
 		comboVos.add(new ComboVo(SaleOrder.Status.CUSTOMER_REFUND, SaleOrder.Status.CUSTOMER_REFUND));
+		comboVos.add(new ComboVo(SaleOrder.Status.ORDER_INVALID, SaleOrder.Status.ORDER_INVALID));
 		return comboVos;
 	}
 	

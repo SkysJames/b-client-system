@@ -30,8 +30,8 @@ $(function() {
 				        {field: 'tableName', title:'表名', width:100},
 				        {field: 'remark', title:'备注', width:100},
 				        {field: 'backupPath', title:'路径', width:300},
-				        {field: 'startTime', title:'开始时间', width:100},
-				        {field: 'endTime', title:'结束时间', width:100}
+				        {field: 'startTime', title:'开始时间', width:180},
+				        {field: 'endTime', title:'结束时间', width:180}
 				        //{field: 'operate', title:'操作', width:100, formatter: this.operate}
 				    ]]
 				});
@@ -87,10 +87,17 @@ $(function() {
 					buttons : [{
 						text : '保存',
 						handler : function() {
-							var row = $('#databackup_edit_table').datagrid('getChecked');
-							if (!row || row.length == 0) {
+							var rows = $('#databackup_edit_table').datagrid('getChecked');
+							if (!rows || rows.length == 0) {
 								$.messager.alert('提示', '请选择要备份的表');
 								return;
+							}
+							
+							var tableNames = [];
+							var remarks = [];
+							for (var i = 0; i < rows.length; ++i) {
+								tableNames.push(rows[i].tableName);
+								remarks.push(rows[i].remark);
 							}
 							$.messager.confirm({
 								title : '警告',
@@ -99,13 +106,13 @@ $(function() {
 								cancel : '取消',
 								fn : function(r) {
 									if (r) {
-										load(row.tableName + '备份执行中...');
+										load('备份执行中...');
 										$.ajax({
 											url : '/databackup/save',
 											type : 'post',
 											data : {
-												tableName : row[0].tableName,
-												remark : row[0].remark
+												tableName : tableNames.join(','),
+												remark : remarks.join(',')
 											},
 											dataType : 'json',
 											success : function(data) {

@@ -37,7 +37,7 @@
                 pageSize: 10,
                 pageList: [10, 20, 30, 40, 50],  
 			    fit : true,
-			    singleSelect : true,
+			    singleSelect : false,
 			    queryParams : {},
 			    onBeforeLoad : function(params) {
 			    	return true;
@@ -45,8 +45,8 @@
 			    onLoadSuccess : function(data) {return true},
 			    columns:[[
 			        {field:'ck',checkbox:true},
-			        {field: 'tableName', title:'表名', width:100},
-			        {field: 'remark', title:'备注', width:100}
+			        {field: 'tableName', title:'表名', width:150},
+			        {field: 'remark', title:'备注', width:200}
 			    ]]
 			});
 			$('#databackup_edit_table').datagrid('getPager').pagination({  
